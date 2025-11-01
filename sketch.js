@@ -13,7 +13,7 @@ let gravity;
 let img;
 
 function preload() {
-  img = loadImage("Artwork.jpg"); // replace with your own image path
+  img = loadImage("assets/Assets/KT_Pathway_Avenue.jpg.jpg"); // replace with your own image path
 }
 
 function setup() {
