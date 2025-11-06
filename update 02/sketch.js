@@ -4,6 +4,7 @@ let rowWeaves = 2;
 let colWeaves = 2;
 let spacing = 12;
 let morphDuration = 150;
+let wormImg;
 
 function preload() {
   img = loadImage('assets/KT_Pathway_Avenue.jpg');
@@ -15,11 +16,23 @@ function setup() {
   noFill();
   img.resize(width, height);
   drawWeaves();
+  wormImg = createGraphics(width, height);
 }
 
 function draw() {
   background(255);
   drawFlowField();
+  noTint();
+
+  wormImg.push();
+  wormImg.erase(10, 10);
+  wormImg.rect(0, 0, width, height);
+  wormImg.noErase();
+  wormImg.pop();
+
+  drawWorms(wormImg);
+  image(wormImg, 0, 0, width, height);
+
 
   for (const weave of weaves) {
     weave.update();
