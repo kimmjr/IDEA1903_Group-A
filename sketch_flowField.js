@@ -1,9 +1,13 @@
 
 
-
+// flow field
 let img;
 let spacing = 12;
-let morphDuration = 150; 
+let morphDuration = 300; 
+
+// circle weave
+let weaves = [];
+const numWeaves = 20;
 
 function preload() {
   img = loadImage('assets/KT_Pathway_Avenue.jpg');
@@ -16,8 +20,6 @@ function setup() {
 
 function draw() {
   img.loadPixels();
-
-  // Progress from 0 to 1
   let progress = constrain(frameCount / morphDuration, 0, 1);
 
   // Fade out image smoothly
@@ -56,3 +58,4 @@ function windowResized() {
   resizeCanvas(windowWidth, windowHeight);
   img.resize(width, height);
 }
+
