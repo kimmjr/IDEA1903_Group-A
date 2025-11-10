@@ -1,16 +1,16 @@
 
-function drawWeaves(){
+function drawWeaves() {
   weaves = [];
 
-  let spacingX = width / (colWeaves+1);
-  let spacingY = height / (rowWeaves+1);
-  let radius = min(width,height)/10;
+  let spacingX = width / (colWeaves + 1);
+  let spacingY = height / (rowWeaves + 1);
+  let radius = min(width, height) / 10;
 
   for (let c = 0; c < colWeaves; c++) {
-    for (let r=0; r < rowWeaves; r++){
-      let x = spacingX * (c+1);
-      let y = spacingY * (r+1);
-      weaves.push(new Weave(x,y,radius * random(0.8,1.2))); // Add each weave object to the array
+    for (let r = 0; r < rowWeaves; r++) {
+      let x = spacingX * (c + 1);
+      let y = spacingY * (r + 1);
+      weaves.push(new Weave(x, y, radius * random(0.8, 1.2))); // Add each weave object to the array
     }
   }
 }
@@ -19,13 +19,13 @@ class Weave {
   constructor(centreX, centreY, weaveRadius) {
     this.centreX = centreX;
     this.centreY = centreY;
-    this.weaveRadius = weaveRadius*2;
+    this.weaveRadius = weaveRadius * 2;
     this.strokewidth = 0.7;
     this.pointsOnCircle = 20;
     this.wovenLayers = 5;
 
     this.waveAmplitude = this.weaveRadius * 0.08;
-    this.waveSpeed = 0.02; 
+    this.waveSpeed = 0.02;
     this.rotationSpeed = 0.1;
     this.time = 0;
 
@@ -43,16 +43,16 @@ class Weave {
     noFill();
     rotate(frameCount * this.rotationSpeed);
 
-    for (let n=0; n<this.wovenLayers; n++){
-    push();
-    this.drawCircularWeave(this.weaveRadius*(1*(n/10)), this.overColour, -1);
-    this.drawCircularWeave(this.weaveRadius*1.05*(n/10), this.underColour, -1);
-    pop();
-    } 
+    for (let n = 0; n < this.wovenLayers; n++) {
+      push();
+      this.drawCircularWeave(this.weaveRadius * (1 * (n / 10)), this.overColour, -1);
+      this.drawCircularWeave(this.weaveRadius * 1.05 * (n / 10), this.underColour, -1);
+      pop();
+    }
     pop();
   }
 
-  drawCircularWeave(radiusBase, colour, direction){
+  drawCircularWeave(radiusBase, colour, direction) {
     stroke(colour);
     strokeWeight(this.strokewidth);
 
@@ -66,10 +66,10 @@ class Weave {
       let r1 = radiusBase - wave1;
       let r2 = radiusBase - wave2;
 
-      let x1 = r1 * cos(angle1)*2;
-      let y1 = r1 * sin(angle1)*2;
-      let x2 = r2 * cos(angle2)*2;
-      let y2 = r2 * sin(angle2)*2;
+      let x1 = r1 * cos(angle1) * 2;
+      let y1 = r1 * sin(angle1) * 2;
+      let x2 = r2 * cos(angle2) * 2;
+      let y2 = r2 * sin(angle2) * 2;
 
       let cx1 = (r1 - this.waveAmplitude * direction) * cos(angle1 - 2);
       let cy1 = (r1 + this.waveAmplitude * direction) * sin(angle1 + 2);
