@@ -1,30 +1,5 @@
 // I have created a separate function for this 
 
-
-
-let trails = [];
-
-function setup() {
-  createCanvas(windowWidth, windowHeight);
-  background(255);
-  angleMode(DEGREES);
-
-  // Initialize organic line trails
-  for (let i = 0; i < 8; i++) {
-    trails.push(new LineTrail(random(width), random(height), 0.5, 150));
-  }
-}
-
-function draw() {
-  background(255, 20); // Fading effect for trails
-
-  // Update and display trails
-  for (let t of trails) {
-    t.update();
-    t.display();
-  }
-}
-
 // ✅ Organic LineTrail Class using Perlin noise
 class LineTrail {
   constructor(x, y, speed, length) {
