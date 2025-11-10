@@ -2,24 +2,25 @@
 
 
 
-let trails = [];
+let trailArr = [];
 
 function setup() {
-  createCanvas(windowWidth, windowHeight);
-  background(255);
+  let canvas = createCanvas(windowWidth, windowHeight);
+  canvas.drawingContext.getContextAttributes().willReadFrequently = true;
+  // background(255);
   angleMode(DEGREES);
 
-  // Initialize organic line trails
+  // Initialize organic line  trailArr
   for (let i = 0; i < 8; i++) {
-    trails.push(new LineTrail(random(width), random(height), 0.5, 150));
+    trailArr.push(new LineTrail(random(width), random(height), 0.5, 150));
   }
 }
 
 function draw() {
-  background(255, 20); // Fading effect for trails
+  // background(255, 20); // Fading effect for  trailArr
 
-  // Update and display trails
-  for (let t of trails) {
+  // Update and display  trailArr
+  for (let t of trailArr) {
     t.update();
     t.display();
   }

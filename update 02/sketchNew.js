@@ -2,6 +2,8 @@
 
 let img;
 let weaves = [];
+let threadingWorms = [];
+let threadingWormsImg;
 let weaveSpacing = 6;
 let spacing = 12;
 let morphDuration = 150;
@@ -14,7 +16,8 @@ function preload() {
 }
 
 function setup() {
-  createCanvas(windowWidth, windowHeight);
+  let canvas = createCanvas(windowWidth, windowHeight);
+  canvas.drawingContext.getContextAttributes().willReadFrequently = true;
   angleMode(DEGREES);
   noFill();
   img.resize(width, height);
@@ -22,16 +25,23 @@ function setup() {
   drawWeaves();
 
   lineImg = createGraphics(width, height);
+  threadingWormsImg = createGraphics(width, height);
 
   lineSystem = new LineSystem(weaves);
 
-   for (let i = 0; i < 8; i++) {
+  for (const weave of weaves) {
+    for (let i = 0; i < 3; ++i) {
+      threadingWorms.push(new ThreadingWorm(weave.centreX, weave.centreY));
+    }
+  }
+
+  for (let i = 0; i < 8; i++) {
     trails.push(new LineTrail(random(width), random(height), 0.5, 150));
   }
 }
 
 function draw() {
-  background(255);
+  background(255, 20);
 
   // Draw flow field from circular weave logic
   drawFlowField();
@@ -40,7 +50,7 @@ function draw() {
   // render lines using LineSystem
   lineSystem.render(lineImg);
 
-    // Update and display trails
+  // Update and display trails
   for (let t of trails) {
     t.update();
     t.display();
@@ -52,6 +62,21 @@ function draw() {
     weave.update();
     weave.display();
   }
+  pop();
+
+  push();
+  threadingWormsImg.push();
+  threadingWormsImg.erase(20, 20);
+  threadingWormsImg.rect(0, 0, width, height);
+  threadingWormsImg.noErase();
+  threadingWormsImg.pop();
+
+  for (const worm of threadingWorms) {
+    worm.update();
+    worm.render(threadingWormsImg);
+    console.log("Worm pos: ", worm.curX, "  ", worm.curY)
+  }
+  image(threadingWormsImg, 0, 0, width, height);
   pop();
 }
 
