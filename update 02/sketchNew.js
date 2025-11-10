@@ -18,13 +18,10 @@ function setup() {
   noFill();
   img.resize(width, height);
 
-  // Initialize weaves from circular weave logic
   drawWeaves();
 
-  // Create graphics buffer for lines
   lineImg = createGraphics(width, height);
 
-  // Initialize line system
   lineSystem = new LineSystem(weaves);
 }
 

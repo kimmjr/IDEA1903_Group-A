@@ -4,7 +4,6 @@
 
 class LineSystem {
   constructor(weaves) {
-    // Dynamically calculate line count and radius based on canvas size
     let numLines = floor(width / 20); // Line count based on screen size
     let dynamicRadius = width / 12;   // Radius scales with canvas width
 
@@ -28,20 +27,16 @@ class LineSystem {
     }
   }
 
-  // ✅ New method to handle erase + update + display + draw
   render(graphics) {
-    // Apply soft erase for fading trails
     graphics.push();
-    graphics.erase(20, 20); // stronger erase for faster fade
+    graphics.erase(20, 20); // adjust number for faster fade
     graphics.rect(0, 0, width, height);
     graphics.noErase();
     graphics.pop();
 
-    // Update and display lines
     this.update();
     this.display(graphics);
 
-    // Draw line layer on main canvas
     image(graphics, 0, 0, width, height);
   }
 }
@@ -91,7 +86,7 @@ class Line {
   }
 
   display(graphics) {
-    // Draw main line with transparency for fading effect
+    // Draw main line 
     graphics.noFill();
     graphics.stroke(red(this.color), green(this.color), blue(this.color), 80);
     graphics.strokeWeight(3);
