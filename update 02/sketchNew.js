@@ -1,11 +1,12 @@
 
+
 let img;
 let weaves = [];
 let weaveSpacing = 6;
 let spacing = 12;
 let morphDuration = 150;
-let wormImg;
-let wormSystem;
+let lineImg;
+let lineSystem;
 
 function preload() {
   img = loadImage('assets/KT_Pathway_Avenue.jpg');
@@ -16,29 +17,28 @@ function setup() {
   angleMode(DEGREES);
   noFill();
   img.resize(width, height);
-  drawWeaves();
-  wormImg = createGraphics(width, height);
 
-  wormSystem = new WormSystem(weaves); 
+  // Initialize weaves from circular weave logic
+  drawWeaves();
+
+  // Create graphics buffer for lines
+  lineImg = createGraphics(width, height);
+
+  // Initialize line system
+  lineSystem = new LineSystem(weaves);
 }
 
 function draw() {
   background(255);
 
+  // Draw flow field from circular weave logic
   drawFlowField();
   noTint();
 
-  // Apply soft erase for fading trails
-  wormImg.push();
-  wormImg.erase(20, 20); // stronger erase for faster fade
-  wormImg.rect(0, 0, width, height);
-  wormImg.noErase();
-  wormImg.pop();
+  // render lines using LineSystem
+  lineSystem.render(lineImg);
 
-  wormSystem.update();
-  wormSystem.display(wormImg);
-  image(wormImg, 0, 0, width, height);
-
+  // Draw weaves on top
   push();
   for (const weave of weaves) {
     weave.update();
@@ -50,6 +50,7 @@ function draw() {
 function windowResized() {
   resizeCanvas(windowWidth, windowHeight);
   img.resize(width, height);
+
   drawWeaves();
-  wormSystem = new WormSystem(weaves); // Reinitialize worms dynamically
+  lineSystem = new LineSystem(weaves);
 }

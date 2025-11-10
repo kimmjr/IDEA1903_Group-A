@@ -1,34 +1,52 @@
 // started playing around the the worms to make them smaller and to go around the circles on the page
 
 
-class WormSystem {
+
+class LineSystem {
   constructor(weaves) {
-    // Dynamically calculate worm count and radius based on canvas size
-    let numWorms = floor(width / 20); // Worm count based on screen size
-    let dynamicRadius = width / 12;    // Radius scales with canvas width
+    // Dynamically calculate line count and radius based on canvas size
+    let numLines = floor(width / 20); // Line count based on screen size
+    let dynamicRadius = width / 12;   // Radius scales with canvas width
 
     this.weaves = weaves;
-    this.worms = [];
-    for (let i = 0; i < numWorms; i++) {
-      let targetIndex = i % this.weaves.length; // evenly distribute worms across weaves
-      this.worms.push(new Worm(this.weaves[targetIndex], 1, dynamicRadius));
+    this.lines = [];
+    for (let i = 0; i < numLines; i++) {
+      let targetIndex = i % this.weaves.length; // evenly distribute lines across weaves
+      this.lines.push(new Line(this.weaves[targetIndex], 1, dynamicRadius));
     }
   }
 
   update() {
-    for (let w of this.worms) {
-      w.update();
+    for (let l of this.lines) {
+      l.update();
     }
   }
 
   display(graphics) {
-    for (let w of this.worms) {
-      w.display(graphics);
+    for (let l of this.lines) {
+      l.display(graphics);
     }
+  }
+
+  // ✅ New method to handle erase + update + display + draw
+  render(graphics) {
+    // Apply soft erase for fading trails
+    graphics.push();
+    graphics.erase(20, 20); // stronger erase for faster fade
+    graphics.rect(0, 0, width, height);
+    graphics.noErase();
+    graphics.pop();
+
+    // Update and display lines
+    this.update();
+    this.display(graphics);
+
+    // Draw line layer on main canvas
+    image(graphics, 0, 0, width, height);
   }
 }
 
-class Worm {
+class Line {
   constructor(targetWeave, speed, radius) {
     this.targetWeave = targetWeave;
     this.speed = speed;
@@ -39,22 +57,21 @@ class Worm {
     this.noiseOffset = random(1000);
 
     // Assign a random color from a chosen palette
-    const wormColors = [
+    const lineColors = [
       color(201, 85, 159),    // Purple
-      color(229, 37, 37),    // Red
-      color(33, 144, 69),    // Green
-      color(14, 76, 139),  // Blue
-      color(14, 40, 20), // Black
-      color(239, 120, 25) // Orange
+      color(229, 37, 37),     // Red
+      color(33, 144, 69),     // Green
+      color(14, 76, 139),     // Blue
+      color(14, 40, 20),      // Black
+      color(239, 120, 25)     // Orange
     ];
-    this.color = wormColors[floor(random(wormColors.length))];
+    this.color = lineColors[floor(random(lineColors.length))];
   }
 
   update() {
     if (!this.targetWeave) return;
 
-    // Weaving using Perlin noise to make it more organic.
-    // Radius is oscillating the circles
+    // Organic weaving using Perlin noise
     let dynamicRadius = this.radius + sin(frameCount * 0.02) * 20;
     let wobble = map(noise(this.noiseOffset), 0, 1, -15, 15);
 
@@ -69,8 +86,8 @@ class Worm {
       this.points.shift();
     }
 
-    // worms fade out after a defined period of time
-    if (frameCount % 300 === 0) this.points = []; // change number to adjust
+    // Fade out after a defined period
+    if (frameCount % 300 === 0) this.points = [];
   }
 
   display(graphics) {
@@ -93,3 +110,4 @@ class Worm {
     }
   }
 }
+
