@@ -2,13 +2,7 @@
 function drawFlowField() {
   img.loadPixels();
 
-  /* I've hidden this progress and used 'speed factor' instead
-  // Progress from 0 to 1
-  let progress = constrain(frameCount / morphDuration, 0, 1);
-*/
-
-
-  let speedFactor = 1; // Increase speed of morph
+  let speedFactor = 3; // Increase speed of morph
   let progress = constrain((frameCount * speedFactor) / morphDuration, 0, 1);
 
 
@@ -37,11 +31,4 @@ function drawFlowField() {
       ellipse(x + offsetX, y + offsetY, size, size);
     }
   }
-
-  /*if (progress >= 1) {
-    //Stop morphing
-    noLoop(); 
-    Kristina - i have edited this so that the draw repeats itself and keeps going
-    frameCount = 0;
-  }*/
 }

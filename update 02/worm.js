@@ -2,13 +2,13 @@
  * startX, startY, frequency, phase, decay, amplitude, trajectory (radians), index
  */
 let dotPositions = [];
-const fps = 30;
+const fps = 20; // changed from 30 - kim
 const baseFreq = 0.4;
 const freqRange = 0.3;
-const displacement = 4;
+const displacement = 2; // changed from 4 - kim
 const amplitude = 50;
 const amplitudeRange = 10;
-const baseSize = 10;
+const baseSize = 4; // changed from 10 - kim
 const baseDecay = 50;
 const decayRange = 10;
 

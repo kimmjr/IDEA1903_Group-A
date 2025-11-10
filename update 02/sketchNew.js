@@ -1,15 +1,11 @@
-// This is the sketch file that I had ajusted when I was playing around with the flow field morphing in and out - Kim
 
 let img;
 let weaves = [];
-let rowWeaves = 4;
-let colWeaves = 4;
+let weaveSpacing = 6;
 let spacing = 12;
-let morphDuration = 200; // changed this from 150
-let solidColor; // this is what i have added
-let spacingFlow; // added for the 
+let morphDuration = 150;
 let wormImg;
-let index = (x + y * img.width) * 4;
+let wormSystem;
 
 function preload() {
   img = loadImage('assets/KT_Pathway_Avenue.jpg');
@@ -19,10 +15,11 @@ function setup() {
   createCanvas(windowWidth, windowHeight);
   angleMode(DEGREES);
   noFill();
-  solidColor = color(255, 255, 255); // added in a solid colour for the middle of the morph
   img.resize(width, height);
   drawWeaves();
   wormImg = createGraphics(width, height);
+
+  wormSystem = new WormSystem(weaves); 
 }
 
 function draw() {
@@ -31,29 +28,28 @@ function draw() {
   drawFlowField();
   noTint();
 
+  // Apply soft erase for fading trails
   wormImg.push();
-  wormImg.erase(10, 10);
+  wormImg.erase(20, 20); // stronger erase for faster fade
   wormImg.rect(0, 0, width, height);
   wormImg.noErase();
   wormImg.pop();
 
-  drawWorms(wormImg);
+  wormSystem.update();
+  wormSystem.display(wormImg);
   image(wormImg, 0, 0, width, height);
 
-  push(); 
-  rotate(45);                
-  translate(-width / 2, -height / 2);
-
+  push();
   for (const weave of weaves) {
     weave.update();
     weave.display();
   }
   pop();
-
 }
 
 function windowResized() {
   resizeCanvas(windowWidth, windowHeight);
   img.resize(width, height);
   drawWeaves();
+  wormSystem = new WormSystem(weaves); // Reinitialize worms dynamically
 }
