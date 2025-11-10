@@ -39,7 +39,7 @@ function draw() {
   wormSystem.display(wormImg);
   image(wormImg, 0, 0, width, height);
 
-  drawWorms(graphics, startingPositions /* array of x and y starting positions */);
+  
 
   push();
   for (const weave of weaves) {
