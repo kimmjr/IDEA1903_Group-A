@@ -2,8 +2,9 @@
 function drawFlowField() {
   img.loadPixels();
 
-  // Progress from 0 to 1
-  let progress = constrain(frameCount / morphDuration, 0, 1);
+  let speedFactor = 3; // Increase speed of morph
+  let progress = constrain((frameCount * speedFactor) / morphDuration, 0, 1);
+
 
   // Fade out image smoothly
   tint(255, 255 * (1 - progress)); 
@@ -21,7 +22,7 @@ function drawFlowField() {
       let baseSize = map(brightness, 0, 255, 2, spacing);
       let offsetX = map(noise(x * 0.01, y * 0.01, frameCount * 0.01), 0, 1, -3, 3);
       let offsetY = map(noise(x * 0.01 + 100, y * 0.01 + 100, frameCount * 0.01), 0, 1, -3, 3);
-      let size = baseSize + sin(frameCount * 0.05 + (x + y) * 0.01) * 2;
+      let size = baseSize + sin(frameCount * 0.05 + (x + y) * 0.01) *30;
 
       let alpha = lerp(0, 255, progress);
 
@@ -30,11 +31,4 @@ function drawFlowField() {
       ellipse(x + offsetX, y + offsetY, size, size);
     }
   }
-
-  /*if (progress >= 1) {
-    //Stop morphing
-    noLoop(); 
-    Kristina - i have edited this so that the draw repeats itself and keeps going
-    frameCount = 0;
-  }*/
 }
