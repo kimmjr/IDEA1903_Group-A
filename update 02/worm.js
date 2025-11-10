@@ -26,22 +26,23 @@ function movementEquation(pos) {
 }
 
 // Starting position generation
-function createRandomPosition() {
-  const x = width * random();
-  const y = height * random();
+function createRandomPosition(startingPositions /* array of x and y starting positions */) {
+  const centre = startingPositions[Math.floor(startingPositions.length * random())];
+  const x = centre.x;
+  const y = centre.y;
   const trj = 360 * random();
   const freq = baseFreq + random() * freqRange - freqRange / 2;
-  const phase = random(0, 360);
+  const phase = 0;//random(0, 360);
   const decay = baseDecay + random() * decayRange - decayRange / 2;
   const amp = amplitude + random() * amplitudeRange - amplitudeRange / 2;
   return { x: x, y: y, freq, phase, decay, amp: amp, trj: trj, idx: 0 };
 }
 
-function drawWorms(graphics) {
+function drawWorms(graphics, startingPositions /* array of x and y starting positions */) {
   const numDots = 10;
-
+  console.log("Starting positions: ", startingPositions)
   while (dotPositions.length < numDots) {
-    dotPositions.push(createRandomPosition());
+    dotPositions.push(createRandomPosition(startingPositions));
   }
 
   frameRate(fps);
@@ -56,7 +57,7 @@ function drawWorms(graphics) {
     let y = newPos.y;
     if (x > width || x < 0 ||
       y > height || y < 0) {
-      dotPositions[i] = createRandomPosition(); // Reset if out of bounds
+      dotPositions[i] = createRandomPosition(startingPositions); // Reset if out of bounds
     } else {
       dotPositions[i].idx++; // Timestamp of worm
     }
