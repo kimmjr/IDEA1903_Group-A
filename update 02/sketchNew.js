@@ -7,7 +7,7 @@ let spacing = 12;
 let morphDuration = 150;
 let lineImg;
 let lineSystem;
-let trails = [];
+let wormImg;
 
 function preload() {
   img = loadImage('assets/KT_Pathway_Avenue.jpg');
@@ -19,15 +19,15 @@ function setup() {
   noFill();
   img.resize(width, height);
 
+  // Initialize weave positions
   drawWeaves();
 
+  // Create graphics buffers
   lineImg = createGraphics(width, height);
+  wormImg = createGraphics(width, height);
 
+  // Initialize line system
   lineSystem = new LineSystem(weaves);
-
-   for (let i = 0; i < 8; i++) {
-    trails.push(new LineTrail(random(width), random(height), 0.5, 150));
-  }
 }
 
 function draw() {
@@ -37,14 +37,29 @@ function draw() {
   drawFlowField();
   noTint();
 
-  // render lines using LineSystem
+  // Render lines using LineSystem
   lineSystem.render(lineImg);
 
-    // Update and display trails
-  for (let t of trails) {
-    t.update();
-    t.display();
+  // Apply soft erase for worm trails and worm lines
+  wormImg.push();
+  wormImg.erase(20, 20);
+  wormImg.rect(0, 0, width, height);
+  wormImg.noErase();
+  wormImg.pop();
+
+  // Call worm trails logic (from wormLogic.js)
+  if (typeof drawWorms === "function" && weaves.length > 0) {
+    drawWorms(wormImg, weaves);
   }
+
+  // Call worm lines logic (from wormLines.js)
+  if (typeof drawWormLines === "function" && weaves.length > 0) {
+    drawWormLines(wormImg, weaves);
+  }
+
+  // Draw layers
+  image(lineImg, 0, 0, width, height);
+  image(wormImg, 0, 0, width, height);
 
   // Draw weaves on top
   push();
@@ -60,5 +75,5 @@ function windowResized() {
   img.resize(width, height);
 
   drawWeaves();
-  lineSystem = new LineSystem(weaves);
 }
+
