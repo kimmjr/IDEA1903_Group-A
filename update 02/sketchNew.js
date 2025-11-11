@@ -9,7 +9,7 @@ let spacing = 12;
 let morphDuration = 150;
 let lineImg;
 let lineSystem;
-let wormImg;
+let trails = [];
 
 function preload() {
   img = loadImage('assets/KT_Pathway_Avenue.jpg');
@@ -27,7 +27,6 @@ function setup() {
 
   // Create graphics buffers
   lineImg = createGraphics(width, height);
-  wormImg = createGraphics(width, height);
   threadingWormsImg = createGraphics(width, height);
 
   // Initialize line system
