@@ -9,7 +9,7 @@ let spacing = 12;
 let morphDuration = 150;
 let lineImg;
 let lineSystem;
-let trails = [];
+let wormImg;
 
 function preload() {
   img = loadImage('assets/KT_Pathway_Avenue.jpg');
@@ -22,11 +22,15 @@ function setup() {
   noFill();
   img.resize(width, height);
 
+  // Initialize weave positions
   drawWeaves();
 
+  // Create graphics buffers
   lineImg = createGraphics(width, height);
+  wormImg = createGraphics(width, height);
   threadingWormsImg = createGraphics(width, height);
 
+  // Initialize line system
   lineSystem = new LineSystem(weaves);
 
   for (const weave of weaves) {
@@ -47,7 +51,7 @@ function draw() {
   drawFlowField();
   noTint();
 
-  // render lines using LineSystem
+  // Render lines using LineSystem
   lineSystem.render(lineImg);
 
   // Update and display trails
@@ -85,5 +89,5 @@ function windowResized() {
   img.resize(width, height);
 
   drawWeaves();
-  lineSystem = new LineSystem(weaves);
 }
+

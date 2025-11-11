@@ -26,7 +26,6 @@ function draw() {
   }
 }
 
-// ✅ Organic LineTrail Class using Perlin noise
 class LineTrail {
   constructor(x, y, speed, length) {
     this.points = [];
