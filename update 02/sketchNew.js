@@ -38,9 +38,6 @@ function setup() {
     }
   }
 
-  /*for (let i = 0; i < 8; i++) {
-    trails.push(new LineTrail(random(width), random(height), 0.5, 150));
-  }*/
 }
 
 function draw() {
@@ -52,12 +49,6 @@ function draw() {
 
   // Render lines using LineSystem
   lineSystem.render(lineImg);
-
-  /*// Update and display trails
-  for (let t of trails) {
-    t.update();
-    t.display();
-  }*/
 
   // Draw weaves on top
   push();
