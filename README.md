@@ -11,3 +11,20 @@ We have separated our class / functions into their own .js files and created a m
 - Each of the lines around the weaves draw, fade and then re-draw.
 - The weaves have continuous movement, as do the worms.
 
+### File summary
+
+#### sketchNew.js
+Base file for entire project. Includes setup(), draw() and update() functions
+
+#### flowfield.js
+Background weave using a local textile artwork. Base image can be found in assets folder.
+
+#### circularWeave.js
+Circular "weaves" that oscillate and populate the canvas in a grid format. 
+
+#### worm.js
+Randomised sinusoidal waves connected to circular weaves.
+
+#### newLine.js
+New lines around circular weaves with small circles growing incrementally. 
+
