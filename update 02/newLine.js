@@ -7,7 +7,7 @@ weaves from 251107_circularweave.js
 class LineSystem {
   constructor(weaves) {
     // Decide how many lines to create based on canvas width
-    let numLines = floor(width / 20); // // More lines on bigger screens
+    let numLines = min(width, height) / 10; // // More lines on bigger screens
     let dynamicRadius = width / 12;   // Radius scales with canvas size
 
     this.weaves = weaves; // Store weave positions
