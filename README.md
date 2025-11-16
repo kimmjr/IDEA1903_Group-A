@@ -5,6 +5,7 @@
 
 We have separated our class / functions into their own .js files and created a main sketchNew.js file which calls each of these functions.
 
+- Our final files are found in folder 'update 02
 - Open artwork using sketchNew.js
 - Our artwork is time based, so everything will automatically move as it is supposed to.
 - You will notice the background circles morphing as the time passes.
