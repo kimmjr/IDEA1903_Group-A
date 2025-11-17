@@ -1,5 +1,5 @@
 
-
+//global variables across all files
 let img;
 let weaves = [];
 let threadingWorms = [];
@@ -74,8 +74,8 @@ function draw() {
 
 function windowResized() {
   resizeCanvas(windowWidth, windowHeight);
-  img.resize(width, height);
+  img.resize(width, height); //resizes image when window is resized
 
-  drawWeaves();
+  drawWeaves(); //redraws weaves on canvas when window is resized
 }
 
