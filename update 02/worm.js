@@ -1,5 +1,6 @@
+// Thread parameters tuned through trial and error
 const fps = 20; // changed from 30 - kim
-const baseFreq = 0.4;
+const baseFreq = 0.4; // 
 const freqRange = 0.3;
 const displacement = 2; // changed from 4 - kim
 const amplitude = 50;
@@ -23,6 +24,7 @@ function movementCalculation(x, y, idx, amp, freq, displacement, trj, decay) {
 
 class ThreadingWorm {
   constructor(startX, startY) {
+    // Initialise the thread
     this.frequency = baseFreq + random() * freqRange - freqRange / 2;
     this.displacement = 2; // changed from 4 - kim
     this.decay = baseDecay + random() * decayRange - decayRange / 2;
@@ -30,7 +32,7 @@ class ThreadingWorm {
     this.reset(startX, startY);
   }
 
-  reset(startX, startY) {
+  reset(startX, startY) { // Reset the thread to its initial state.
     this.idx = 0;
     this.startX = startX;
     this.startY = startY;
@@ -40,10 +42,12 @@ class ThreadingWorm {
   }
 
   update() {
+    // Reset the thread if it exceeds the screen bounds
     if (this.curX < 0 || this.curX > width || this.curY < 0 || this.curY > height) {
       this.reset(this.startX, this.startY);
     }
 
+    // Calculate and update the new thread position
     const newPos = movementCalculation(this.startX, this.startY, this.idx, this.amplitude, this.frequency, this.displacement, this.trajectory, this.decay);
     this.curX = newPos.x;
     this.curY = newPos.y;
@@ -51,10 +55,11 @@ class ThreadingWorm {
   }
 
   render(graphics) {
+    // Set the scene framerate
     frameRate(fps);
-    const scaling = this.startX * this.startY;
 
     // pulsating size
+    const scaling = this.startX * this.startY;
     const size = baseSize + sin(this.idx * 3 + scaling * 45) * 2;
 
 
@@ -67,7 +72,7 @@ class ThreadingWorm {
     graphics.fill(r, g, b);
     graphics.circle(this.curX, this.curY, size);
 
-    // optional orbiting red satellite for each dot
+    // Orbiting red satellite for each dot
     const orbitAngle = this.idx * 5 + scaling * 30;
     const orbitRadius = 10 + sin(this.idx * 2 + scaling * 100) * 5;
     const orbitX = this.curX + cos(orbitAngle) * orbitRadius;

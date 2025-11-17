@@ -9,7 +9,6 @@ let spacing = 12;
 let morphDuration = 150;
 let lineImg;
 let lineSystem;
-//let trails = [];
 
 function preload() {
   img = loadImage('assets/KT_Pathway_Avenue.jpg');
@@ -32,7 +31,7 @@ function setup() {
   // Initialize line system
   lineSystem = new LineSystem(weaves);
 
-  for (const weave of weaves) {
+  for (const weave of weaves) { // Instantiate and initialise the threads based on the weave centres
     for (let i = 0; i < 3; ++i) {
       threadingWorms.push(new ThreadingWorm(weave.centreX, weave.centreY));
     }
@@ -60,15 +59,14 @@ function draw() {
 
   push();
   threadingWormsImg.push();
-  threadingWormsImg.erase(20, 20);
+  threadingWormsImg.erase(20, 20); // Partially erase the previously rendered image.
   threadingWormsImg.rect(0, 0, width, height);
   threadingWormsImg.noErase();
   threadingWormsImg.pop();
 
-  for (const worm of threadingWorms) {
+  for (const worm of threadingWorms) { // Update and render the threads
     worm.update();
     worm.render(threadingWormsImg);
-    console.log("Worm pos: ", worm.curX, "  ", worm.curY)
   }
   image(threadingWormsImg, 0, 0, width, height);
   pop();

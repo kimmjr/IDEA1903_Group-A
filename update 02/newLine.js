@@ -1,6 +1,6 @@
 /* 
 This class manages a group of animated lines that orbit around 
-weaves from 251107_circularweave.js
+weaves from circularweave.js
 */
 
 
